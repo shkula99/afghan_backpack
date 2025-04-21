@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import '../constants/colors.dart';
 import 'welcome_screen3.dart';
 
 class Welcomescreen2 extends StatelessWidget {
@@ -7,27 +9,24 @@ class Welcomescreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color(0xFFFDF2EC),
+      backgroundColor: kBrightColorForBackground,
       body: SafeArea(
         child: Stack(
           children: [
             Column(
               children: [
-
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30),
                   ),
                   child: Image.asset(
-                    'images/wl_screen2.jpg',
+                    'images/screen_images/wl_screen2.jpg',
                     height: MediaQuery.of(context).size.height * 0.52,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-
                 // Bottom section
                 Expanded(
                   child: Padding(
@@ -41,12 +40,10 @@ class Welcomescreen2 extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w800,
-                            color: Colors.black,
+                            color: kFontColor,
                           ),
                         ),
                         const SizedBox(height: 20),
-
-                        // Page indicator
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -54,7 +51,7 @@ class Welcomescreen2 extends StatelessWidget {
                               height: 8,
                               width: 20,
                               decoration: BoxDecoration(
-                                color: const Color(0xFF0D6EFD),
+                                color: kButtonBackgroundColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
@@ -63,14 +60,13 @@ class Welcomescreen2 extends StatelessWidget {
                               height: 8,
                               width: 8,
                               decoration: BoxDecoration(
-                                color: const Color(0xFFB0C4DE),
+                                color: kBoxDecoration1Color,
                                 shape: BoxShape.circle,
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 40),
-
                         // "Next" button
                         ElevatedButton(
                           onPressed: () {
@@ -82,7 +78,7 @@ class Welcomescreen2 extends StatelessWidget {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0D6EFD),
+                            backgroundColor: kButtonBackgroundColor,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 100, vertical: 16),
                             shape: RoundedRectangleBorder(
@@ -93,7 +89,7 @@ class Welcomescreen2 extends StatelessWidget {
                             "Next",
                             style: TextStyle(
                               fontSize: 18,
-                              color: Colors.white,
+                              color: kTextColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -104,7 +100,6 @@ class Welcomescreen2 extends StatelessWidget {
                 ),
               ],
             ),
-
             // Skip button
             // Skip button
             Positioned(
@@ -122,7 +117,7 @@ class Welcomescreen2 extends StatelessWidget {
                 child: const Text(
                   "Skip",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: kTextColor,
                     fontSize: 16,
                   ),
                 ),

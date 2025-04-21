@@ -1,42 +1,23 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled1/screens/province_screen.dart';
-import 'package:untitled1/screens/welcome_screen3.dart';
+import 'package:untitled1/screens/profile_page.dart';
 
-import '../data/provinces_data.dart' as ProvinceData;
-import '../models/province_model.dart';
+import '../constants/colors.dart';
+import '../constants/icons.dart';
+import '../data/province_data.dart';
+import '../widgets/city_card.dart';
+import '../widgets/custom_drawer.dart';
+import '../widgets/province_screen.dart';
+import 'herat_screens/herat_main.dart';
 
+/// 1. HomePage is a stateless widget that shows a top menu row + list of city cards.
 class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlue[100],
-        elevation: 0,
-        automaticallyImplyLeading:
-            false, // <- This removes the default back arrow
-        leading: IconButton(
-          icon: Icon(Icons.list, color: Colors.black87),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Welcomescreen3()),
-            );
-          },
-        ),
-        title: Text(
-          'Popular Cities of Afghanistan',
-          style: TextStyle(color: Colors.black87),
-        ),
-      ),
-    );
-  }
-}
+  HomePage({Key? key}) : super(key: key);
 
-class PopularCitiesPage extends StatelessWidget {
-  static const routeName = '/popular-cities';
+  /// 2. Key to control the Scaffold, so we can open the drawer programmatically.
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  /// 3. Sample data for the four Afghan cities.
   final List<Map<String, String>> cities = [
     {
       'name': 'Herat',
@@ -62,129 +43,101 @@ class PopularCitiesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 4. Scaffold provides the overall layout: a hidden drawer + body content.
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar:  AppBar(
-    backgroundColor: Colors.lightBlue[100],
-      elevation: 0,
-      automaticallyImplyLeading: false, // <- This removes the default back arrow
-      leading: IconButton(
-        icon: Icon(Icons.list, color: Colors.black87),
-        onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Welcomescreen3()),
-          );
-        },
-      ),
-      title: Text(
-        'Popular Cities of Afghanistan',
-        style: TextStyle(color: Colors.black87),
-      ),
-    ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView.builder(
-          itemCount: cities.length,
-          itemBuilder: (context, index) {
-            final city = cities[index];
-            return Padding(
-              padding: const EdgeInsets.all(5),
-              child: CityCard(
-                name: city['name']!,
-                location: city['location']!,
-                image: city['image']!,
-                onTap: () {
-                  // find province from ProvinceData
-                  final selectedProvince = ProvinceData.provinces.firstWhere(
-                        (p) => p.name.toLowerCase() == city['name']!.toLowerCase(),
-                    orElse: () => ProvinceData.provinces[0],
-                  );
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProvinceScreen(province: selectedProvince),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-
-
-class CityCard extends StatelessWidget {
-  final String name;
-  final String location;
-  final String image;
-  final VoidCallback onTap;
-
-  const CityCard({
-    required this.name,
-    required this.location,
-    required this.image,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 13),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        elevation: 4,
+      key: _scaffoldKey,
+        drawer: const CustomDrawer(), // ✅ from widgets/custom_drawer.dart// Hidden by default, opens when tapped
+      body: SafeArea(
+        // 5. SafeArea ensures no overlap with status bar/notch
         child: Padding(
-          padding: const EdgeInsets.all(17),
-          child: Row(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  image,
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
+              // ─── Top Menu Row ────────────────────────────────────────────
+              Row(
+                children: [
+                  // 6a. Hamburger icon to open the drawer
+                  IconButton(
+                    icon: kListIcon,
+                    onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                  ),
+                  const SizedBox(width: 8),
+                  // 6b. Title text for the page
+                  const Expanded(
+                    child: Text(
+                      'Popular Cities of Afghanistan',
+                      style:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  // 6c. Profile icon navigates to ProfilePage
+                  IconButton(
+                    icon: const Icon(
+                      Icons.account_circle,
+                      size: 32,
+                      color: kListIconColor,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => ProfilePage()),
+                      );
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(width: 16),
+              const SizedBox(height: 16),
+
+              // ─── City Cards List ────────────────────────────────────────
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                // 7. ListView.builder to dynamically generate a card for each city
+                child: ListView.builder(
+                  itemCount: cities.length,
+                  itemBuilder: (context, index) {
+                    final city = cities[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: GestureDetector(
+                        // 7a. Tapping a card pushes to the HeratCityPage
+                        onTap: () {
+                          if (city['name'] == 'Herat') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ProvinceScreen(province: heratProvince),
+                              ),
+                            );
+                          } else if (city['name'] == 'Kabul') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ProvinceScreen(province: kabulProvince),
+                              ),
+                            );
+                          } else if (city['name'] == 'Balkh') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ProvinceScreen(province: balkhProvince),
+                              ),
+                            );
+                          } else if (city['name'] == 'Bamiyan') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ProvinceScreen(province: bamiyanProvince),
+                              ),
+                            );
+                          }
+                        },
+                        child: CityCard(
+                          name: city['name']!,
+                          location: city['location']!,
+                          image: city['image']!,
+                        ),
                       ),
-                    ),
-                    Text(
-                      location,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Icon(Icons.star_half, color: Colors.amber, size: 16),
-                        SizedBox(width: 4),
-                        Text("4.8"),
-                      ],
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ],
@@ -195,3 +148,6 @@ class CityCard extends StatelessWidget {
   }
 }
 
+/// 9. CityCard is a reusable widget for displaying each city.
+///    - White background restored
+///    - Increased padding & image size for a larger look

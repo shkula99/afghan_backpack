@@ -1,78 +1,71 @@
-
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/welcome_screen1.dart';
+import '../constants/colors.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Page1(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
-
-class Page1 extends StatefulWidget {
-  const Page1({super.key});
+class Splashscreen extends StatefulWidget {
+  const Splashscreen({super.key});
 
   @override
-  Page1State createState() => Page1State();
+  State<Splashscreen> createState() => SplashScreenState();
 }
 
-class Page1State extends State<Page1> {
+class SplashScreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(""),
-        backgroundColor: Color(0xFFB3E5FC),
-        elevation: 0,
-      ),
       body: SafeArea(
         child: Container(
-          color: const Color(0xFFB3E5FC),
           width: double.infinity,
+          height: double.infinity,
+          color: kButtonBackgroundColor,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 50, bottom: 15),
-                height: 444,
-                width: double.infinity,
-                child: Image.asset(
-                  'images/bag.png', // Make sure this path matches the one in pubspec.yaml
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 21),
-                child: Text(
-                  "Afghan Backpack",
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
+              SizedBox(
+                height: size.height * 0.45,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    'images/bag.png',
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Text(
+                "Afghan Backpack",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 14),
+                  elevation: 5,
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Welcomescreen1()),
+                    MaterialPageRoute(
+                      builder: (context) => const Welcomescreen1(),
+                    ),
                   );
                 },
                 child: const Text(
                   "Get Started",
                   style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xFF0D6EFD),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

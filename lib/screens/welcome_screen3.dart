@@ -22,13 +22,12 @@ class Welcomescreen3 extends StatelessWidget {
                     bottomRight: Radius.circular(30),
                   ),
                   child: Image.asset(
-                    'images/wl_screen3.jpg',
+                    'images/screen_images/wl_screen3.jpg',
                     height: MediaQuery.of(context).size.height * 0.52,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-
                 // Bottom section
                 Expanded(
                   child: Padding(
@@ -88,7 +87,7 @@ class Welcomescreen3 extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PopularCitiesPage(),
+                                builder: (context) => HomePage(),
                               ),
                             );
                           },
