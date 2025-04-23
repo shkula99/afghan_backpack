@@ -5,19 +5,18 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/restaurant_card.dart';
 
-class HeratRestaurantsScreen extends StatelessWidget {
+class BalkhRestaurantsScreen extends StatelessWidget {
   final List<Map<String, String>> restaurants = [
     {
-      'name': 'Parmis Restaurant',
-      'image': 'images/herat_resturants/parmis/4.jpg',
-      'description': 'Herat Afghanistan'
+      'name': 'Kefayat Turkish Restaurant',
+      'image': 'images/balkh_restaurants/Kefayat Turkish restaurant/1.JPG',
+      'description': 'Balkh Afghanistan'
     },
     {
-      'name': 'Parmis Restaurant',
-      'image': 'images/herat_resturants/parmis/4.jpg',
-      'description': 'Herat Afghanistan'
-    },
-
+      'name': 'Kefayat Turkish Restaurant',
+      'image': 'images/balkh_restaurants/Kefayat Turkish restaurant/1.JPG',
+      'description': 'Balkh Afghanistan'
+    }
   ];
 
   @override
@@ -51,7 +50,7 @@ class HeratRestaurantsScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 16),
                   const Text(
-                    'Herat',
+                    'Balkh',
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.w700,

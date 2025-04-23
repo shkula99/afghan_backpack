@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/province.dart';
+import '../screens/balkh_screens/balkh_restaurants.dart';
 import '../screens/herat_screens/herat_hotels.dart';
 import '../screens/herat_screens/herat_restaraunts.dart';
 import '../services/weather_service.dart';
@@ -9,10 +10,7 @@ import '../services/weather_service.dart';
 class ProvinceScreen extends StatelessWidget {
   final Province province;
 
-  const ProvinceScreen({
-    Key? key,
-    required this.province,
-  }) : super(key: key);
+  const ProvinceScreen({Key? key, required this.province}) : super(key: key);
 
   void _openLocation(String url) async {
     final Uri uri = Uri.parse(url);
@@ -76,7 +74,10 @@ class ProvinceScreen extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -93,21 +94,34 @@ class ProvinceScreen extends StatelessWidget {
                           children: [
                             // Weather info aligned to right
                             FutureBuilder<String>(
-                              future: WeatherService().getTemperature(province.latitude, province.longitude),  // Use the lat/lon
+                              future: WeatherService().getTemperature(
+                                province.latitude,
+                                province.longitude,
+                              ), // Use the lat/lon
                               builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
                                   return const CircularProgressIndicator();
                                 } else if (snapshot.hasError) {
-                                  return const Text('Failed to load temperature');
+                                  return const Text(
+                                    'Failed to load temperature',
+                                  );
                                 } else {
                                   return Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      const Icon(Icons.wb_sunny, color: Colors.amber, size: 28),
+                                      const Icon(
+                                        Icons.thermostat,
+                                        color: Colors.black,
+                                        size: 28,
+                                      ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        '${snapshot.data}°C',  // Display the fetched temperature
-                                        style: const TextStyle(fontSize: 18, color: Colors.black),
+                                        '${snapshot.data}°C', // Display the fetched temperature
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black,
+                                        ),
                                       ),
                                     ],
                                   );
@@ -119,13 +133,20 @@ class ProvinceScreen extends StatelessWidget {
                             Row(
                               children: [
                                 GestureDetector(
-                                  onTap: () => _openLocation(province.locationUrl),
-                                  child: const Icon(Icons.location_on, color: Colors.orange),
+                                  onTap:
+                                      () => _openLocation(province.locationUrl),
+                                  child: const Icon(
+                                    Icons.location_on,
+                                    color: Colors.orange,
+                                  ),
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
                                   province.name,
-                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
@@ -149,29 +170,43 @@ class ProvinceScreen extends StatelessWidget {
                                     child: TabBarView(
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 12),
+                                          padding: const EdgeInsets.only(
+                                            top: 12,
+                                          ),
                                           child: Text(province.about),
                                         ),
                                         province.photos.isEmpty
-                                            ? const Center(child: Text("No photos available"))
-                                            : PageView.builder(
-                                          itemCount: province.photos.length,
-                                          controller: PageController(viewportFraction: 0.85),
-                                          itemBuilder: (context, index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 8.0, vertical: 16),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(16),
-                                                child: Image.asset(
-                                                  province.photos[index],
-                                                  fit: BoxFit.cover,
-                                                  width: double.infinity,
-                                                ),
+                                            ? const Center(
+                                              child: Text(
+                                                "No photos available",
                                               ),
-                                            );
-                                          },
-                                        ),
+                                            )
+                                            : PageView.builder(
+                                              itemCount: province.photos.length,
+                                              controller: PageController(
+                                                viewportFraction: 0.85,
+                                              ),
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 8.0,
+                                                        vertical: 16,
+                                                      ),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          16,
+                                                        ),
+                                                    child: Image.asset(
+                                                      province.photos[index],
+                                                      fit: BoxFit.cover,
+                                                      width: double.infinity,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                       ],
                                     ),
                                   ),
@@ -183,32 +218,59 @@ class ProvinceScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const Text('Explore',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text(
+                      'Explore',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        categoryIcon('images/icons/historical_place.jpg', 'Historical Places'),
-                        categoryIcon('images/icons/park.jpg', 'Parks'),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HeratRestaurantsScreen()),
-                            );
-                          },
-                          child: categoryIcon('images/icons/restaurant.jpg', 'Restaurants'),
+                        categoryIcon(
+                          'images/icons/historical_place.jpg',
+                          'Historical Places',
                         ),
+                        categoryIcon('images/icons/park.jpg', 'Parks'),
+                        categoryIcon('images/icons/hotel.jpg', 'Hotels'),
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => HeratHotelsScreen()),
-                            );
+                            if (province.name == 'Herat') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => HeratRestaurantsScreen(),
+                                ),
+                              );
+                            } else if (province.name == 'Balkh') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => BalkhRestaurantsScreen(),
+                                ),
+                              );
+                            }
+                            // else if (province.name == 'Bamyan') {
+                            // Navigator.push(
+                            // context,
+                            // MaterialPageRoute(builder: (context) => BamyanRestaurantsScreen()),
+                            // );
+                            // } else if (province.name == 'Mazar') {
+                            // Navigator.push(
+                            // context,
+                            // MaterialPageRoute(builder: (context) => MazarRestaurantsScreen()),
+                            // );
+                            // }
                           },
-                          child: categoryIcon('images/icons/hotel.jpg', 'Hotels'),
+
+                          child: categoryIcon(
+                            'images/icons/restaurant.jpg',
+                            'Restaurants',
+                          ),
                         ),
                       ],
                     ),
