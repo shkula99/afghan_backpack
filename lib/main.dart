@@ -34,7 +34,7 @@ import 'screens/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DBHelper().database;
-  // await DBHelper().insertRestaurants(restaurants);
+  await DBHelper().insertRestaurants(restaurants);
   // await DBHelper().printAllRestaurants();
   //await deleteOldDatabase();
   runApp(MyApp());

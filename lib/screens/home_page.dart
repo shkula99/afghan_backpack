@@ -7,7 +7,7 @@ import '../constants/icons.dart';
 import '../data/province_data.dart';
 import '../widgets/city_card.dart';
 import '../widgets/custom_drawer.dart';
-import '../widgets/province_screen.dart';
+import '../widgets/province_screen_widget.dart';
 import 'herat_screens/herat_main.dart';
 
 /// 1. HomePage is a stateless widget that shows a top menu row + list of city cards.

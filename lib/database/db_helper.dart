@@ -1,6 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+import '../models/restaurant.dart';
+
 class DBHelper {
   static final DBHelper _instance = DBHelper._internal();
   factory DBHelper() => _instance;
@@ -50,13 +52,26 @@ class DBHelper {
     final db = await database; // get the database instance
 
     for (var restaurant in restaurants) {
-      await db.insert(
+      // Check if the restaurant already exists based on a unique field (e.g., id or name)
+      final existingRestaurant = await db.query(
         'restaurants',
-        restaurant,
-        conflictAlgorithm: ConflictAlgorithm.ignore, // avoids overwriting
+        where: 'name = ?', // Assuming 'name' is a unique field
+        whereArgs: [restaurant['name']],
       );
+
+      // If the restaurant doesn't exist, insert it
+      if (existingRestaurant.isEmpty) {
+        await db.insert(
+          'restaurants',
+          restaurant,
+          conflictAlgorithm: ConflictAlgorithm.ignore, // avoids overwriting
+        );
+      } else {
+        print("Restaurant '${restaurant['name']}' already exists in the database.");
+      }
     }
   }
+
 
   Future<void> printAllRestaurants() async {
     final db = await database;
@@ -64,6 +79,21 @@ class DBHelper {
 
     for (var row in maps) {
       print(row);
+    }
+  }
+
+  Future<Restaurant> getRestaurantById(int id) async {
+    final db = await database;
+    final result = await db.query(
+      'restaurants',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (result.isNotEmpty) {
+      return Restaurant.fromMap(result.first);
+    } else {
+      throw Exception('Restaurant not found');
     }
   }
 

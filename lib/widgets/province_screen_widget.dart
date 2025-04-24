@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/province.dart';
-import '../screens/balkh_screens/balkh_restaurants.dart';
+import '../screens/balkh_screens/balkh_restaurants_list.dart';
 import '../screens/herat_screens/herat_hotels.dart';
 import '../screens/herat_screens/herat_restaraunts.dart';
 import '../services/weather_service.dart';

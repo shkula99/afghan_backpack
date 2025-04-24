@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/data/balkh/restaurants_data.dart';
 
 class RestaurantCard extends StatelessWidget {
   final String name;

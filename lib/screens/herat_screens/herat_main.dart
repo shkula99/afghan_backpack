@@ -166,7 +166,7 @@
 
 import 'package:flutter/material.dart';
 import '../../data/province_data.dart';
-import '../../widgets/province_screen.dart';
+import '../../widgets/province_screen_widget.dart';
 
 
 
