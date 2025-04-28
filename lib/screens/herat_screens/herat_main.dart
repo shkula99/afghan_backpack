@@ -175,7 +175,7 @@ class HeratCityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProvinceScreen(province: heratProvince);
+    return ProvinceScreen(provinceId: 2, provinceName: 'Herat');
   }
 }
 

@@ -10,7 +10,7 @@ class BamiyanCityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProvinceScreen(province: bamiyanProvince);
+    return ProvinceScreen(provinceId: 4, provinceName: 'Bamiyan',);
   }
 }
 

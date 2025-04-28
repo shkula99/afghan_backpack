@@ -9,12 +9,12 @@ class HeratRestaurantsScreen extends StatelessWidget {
   final List<Map<String, String>> restaurants = [
     {
       'name': 'Parmis Restaurant',
-      'image': 'images/herat_resturants/parmis/4.jpg',
+      'image': 'assets/images/herat_resturants/parmis/4.jpg',
       'description': 'Herat Afghanistan'
     },
     {
       'name': 'Parmis Restaurant',
-      'image': 'images/herat_resturants/parmis/4.jpg',
+      'image': 'assets/images/herat_resturants/parmis/4.jpg',
       'description': 'Herat Afghanistan'
     },
 

@@ -1,101 +1,43 @@
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
-import '../models/restaurant.dart';
+import 'dart:io';
 
 class DBHelper {
-  static final DBHelper _instance = DBHelper._internal();
-  factory DBHelper() => _instance;
-  DBHelper._internal();
+  static Database? _db;
 
-  Database? _database;
-
+  // Singleton pattern to ensure only one database instance exists
   Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await initDB();
-    return _database!;
+    if (_db != null) return _db!;  // If database is already open, return it
+    _db = await _initDB();  // Otherwise, initialize the database
+    return _db!;
   }
 
-  Future<Database> initDB() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'afghan_backpack.db');
+  // Initialize the database
+  Future<Database> _initDB() async {
+    final dbPath = await getDatabasesPath();  // Get the default database path
+    final path = join(dbPath, 'afghan_backpack.db');  // Name your database file here
 
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _createDB,
-    );
-  }
+    // Check if the database exists in the file system
+    final exists = await databaseExists(path);
 
-  Future _createDB(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE restaurants (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        image TEXT NOT NULL,
-        description TEXT,
-        latitude REAL,
-        longitude REAL,
-        phone TEXT,
-        email TEXT,
-        website TEXT,
-        facebook TEXT,
-        instagram TEXT,
-        province TEXT NOT NULL,
-        photos TEXT
-      )
-    ''');
-  }
+    if (!exists) {
+      // If the database doesn't exist, copy it from assets
+      try {
+        await Directory(dirname(path)).create(recursive: true);  // Ensure directory exists
 
+        // Load the database from assets
+        ByteData data = await rootBundle.load('assets/database/afghan_backpack.db');  // Database path in assets
+        List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
-  Future<void> insertRestaurants(List<Map<String, dynamic>> restaurants) async {
-    final db = await database; // get the database instance
-
-    for (var restaurant in restaurants) {
-      // Check if the restaurant already exists based on a unique field (e.g., id or name)
-      final existingRestaurant = await db.query(
-        'restaurants',
-        where: 'name = ?', // Assuming 'name' is a unique field
-        whereArgs: [restaurant['name']],
-      );
-
-      // If the restaurant doesn't exist, insert it
-      if (existingRestaurant.isEmpty) {
-        await db.insert(
-          'restaurants',
-          restaurant,
-          conflictAlgorithm: ConflictAlgorithm.ignore, // avoids overwriting
-        );
-      } else {
-        print("Restaurant '${restaurant['name']}' already exists in the database.");
+        // Write the database to the correct file path
+        await File(path).writeAsBytes(bytes, flush: true);
+      } catch (e) {
+        print('Error copying database: $e');  // Handle errors during database copy
       }
     }
+
+    // Open the database after confirming the file exists
+    return await openDatabase(path);
   }
-
-
-  Future<void> printAllRestaurants() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('restaurants');
-
-    for (var row in maps) {
-      print(row);
-    }
-  }
-
-  Future<Restaurant> getRestaurantById(int id) async {
-    final db = await database;
-    final result = await db.query(
-      'restaurants',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-
-    if (result.isNotEmpty) {
-      return Restaurant.fromMap(result.first);
-    } else {
-      throw Exception('Restaurant not found');
-    }
-  }
-
 }
-

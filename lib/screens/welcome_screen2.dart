@@ -21,7 +21,7 @@ class Welcomescreen2 extends StatelessWidget {
                     bottomRight: Radius.circular(30),
                   ),
                   child: Image.asset(
-                    'images/screen_images/wl_screen2.jpg',
+                    'assets/images/screen_images/wl_screen2.jpg',
                     height: MediaQuery.of(context).size.height * 0.52,
                     width: double.infinity,
                     fit: BoxFit.cover,
