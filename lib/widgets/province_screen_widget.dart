@@ -8,6 +8,7 @@ import '../database/db_helper.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
 import '../screens/balkh_screens/balkh_hotels_list.dart';
+import '../screens/balkh_screens/balkh_parks_list.dart';
 import '../screens/bamiyan_screens/bamiyan_hotels_list.dart';
 import '../screens/herat_screens/herat_restaraunts_list.dart';
 import '../screens/kabul_screens/kabul_restuarants_list.dart';
@@ -287,39 +288,71 @@ class ProvinceScreen extends StatelessWidget {
                           'assets/images/icons/historical_place.webp',
                           'Historical Places',
                         ),
-                        categoryIcon('assets/images/icons/park.webp', 'Parks'),
                         GestureDetector(
-                          onTap: () {
+                          onTap: (){
                             if (province.id == 3) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => BalkhHotelsScreen(),
+                                  builder: (context) => BalkhParksScreen(),
                                 ),
                               );
                             } else if (province.id == 4) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => BamiyanHotelsScreen(),
+                                  builder: (context) => BamiyanHotelsScreen(),
                                 ),
                               );
                             } else if (province.id == 2) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => HeratHotelsScreen(),
+                                  builder: (context) => HeratHotelsScreen(),
                                 ),
                               );
                             } else if (province.id == 1) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => KabulHotelsScreen(),
+                                  builder: (context) => KabulHotelsScreen(),
+                                ),
+                              );
+                            }
+                          },
+                          child: categoryIcon(
+                            'assets/images/icons/park.webp',
+                            'Parks',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (province.id == 3) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BalkhHotelsScreen(),
+                                ),
+                              );
+                            } else if (province.id == 4) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BamiyanHotelsScreen(),
+                                ),
+                              );
+                            } else if (province.id == 2) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HeratHotelsScreen(),
+                                ),
+                              );
+                            } else if (province.id == 1) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => KabulHotelsScreen(),
                                 ),
                               );
                             }

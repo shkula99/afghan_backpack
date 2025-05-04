@@ -4,6 +4,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import '../models/hotel.dart';
 import '../models/hotel_photo.dart';
+import '../models/park.dart';
+import '../models/park_photo.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
 import '../models/restaurant.dart';
@@ -260,5 +262,79 @@ class DatabaseHelper {
 
 
   // Historical Places Part
+
+
+
+// Parks Part
+// Fetch all parks
+  Future<List<Park>> fetchParks() async {
+    final db = await database;
+
+    // Load all parks
+    final List<Map<String, dynamic>> parkMaps = await db.query(
+      'parks',
+    );
+
+    // Load all parks photos
+    final List<Map<String, dynamic>> photoMaps = await db.query(
+      'parks_photos',
+    );
+
+    // Convert to ParkPhoto objects
+    List<ParkPhoto> allPhotos =
+    photoMaps.map((map) => ParkPhoto.fromMap(map)).toList();
+
+    // Map each park with its photos
+    return parkMaps.map((parkMap) {
+      final parkPhotos =
+      allPhotos
+          .where((photo) => photo.parkId == parkMap['id'])
+          .toList();
+
+      return Park.fromMap(parkMap, parkPhotos);
+    }).toList();
+  }
+
+
+  // Fetch a single park by ID
+  Future<Park?> fetchParkById(int id) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> parkMaps = await db.query(
+      'parks',
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+
+    if (parkMaps.isEmpty) return null;
+
+    final List<Map<String, dynamic>> photoMaps = await db.query(
+      'parks_photos',
+      where: 'park_id = ?',
+      whereArgs: [id],
+    );
+
+    List<ParkPhoto> parkPhotos =
+    photoMaps.map((map) => ParkPhoto.fromMap(map)).toList();
+
+    return Park.fromMap(parkMaps.first, parkPhotos);
+  }
+
+  // Fetch all photos of a specific park
+  Future<List<ParkPhoto>> fetchParkPhotos(int parkId) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'parks_photos',
+      where: 'park_id = ?',
+      whereArgs: [parkId],
+    );
+
+    return List.generate(maps.length, (i) {
+      return ParkPhoto.fromMap(maps[i]);
+    });
+  }
+
 
 }
