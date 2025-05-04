@@ -7,11 +7,18 @@ import 'screens/splash_screen.dart';
 
 
 void main() async {
-
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await deleteOldDatabase();
   runApp(MyApp());
 }
 
 
+Future<void> deleteOldDatabase() async {
+  final dbPath = await getDatabasesPath();
+  final path = '$dbPath/afghan_backpack.db';
+  await deleteDatabase(path);
+  print('Old database deleted!');
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -29,7 +29,7 @@ class SplashScreenState extends State<Splashscreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
-                    'assets/images/bag.png',
+                    'assets/images/bag.webp',
                     fit: BoxFit.cover,
                   ),
                 ),

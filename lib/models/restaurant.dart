@@ -1,4 +1,4 @@
-import 'dart:convert'; // Required for decoding the photos field
+import 'restaurant_photo.dart';
 
 class Restaurant {
   final int id;
@@ -10,10 +10,10 @@ class Restaurant {
   final String phone;
   final String email;
   final String website;
-  final String facebook;
+  final String facebook;  // <-- Keep Facebook here
   final String instagram;
-  final String province;
-  final List<String> photos;
+  final int provinceId;
+  final List<RestaurantPhoto> photos; // <-- Keep List of RestaurantPhoto
 
   Restaurant({
     required this.id,
@@ -27,26 +27,25 @@ class Restaurant {
     required this.website,
     required this.facebook,
     required this.instagram,
-    required this.province,
+    required this.provinceId,
     required this.photos,
   });
 
-  // FromMap constructor
-  factory Restaurant.fromMap(Map<String, dynamic> map) {
+  factory Restaurant.fromMap(Map<String, dynamic> map, List<RestaurantPhoto> photos) {
     return Restaurant(
       id: map['id'],
       name: map['name'] ?? '',
       image: map['image'] ?? '',
       description: map['description'] ?? '',
-      latitude: map['latitude'] ?? 0.0,
-      longitude: map['longitude'] ?? 0.0,
+      latitude: (map['latitude'] ?? 0.0).toDouble(),
+      longitude: (map['longitude'] ?? 0.0).toDouble(),
       phone: map['phone'] ?? '',
       email: map['email'] ?? '',
       website: map['website'] ?? '',
       facebook: map['facebook'] ?? '',
       instagram: map['instagram'] ?? '',
-      province: map['province'] ?? '',
-      photos: map['photos'] != null ? List<String>.from(jsonDecode(map['photos'])) : [],
+      provinceId: map['province_id'] ?? 0,
+      photos: photos,
     );
   }
 }

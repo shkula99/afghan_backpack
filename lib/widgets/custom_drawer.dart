@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -6,52 +7,51 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+      backgroundColor: Colors.white,
+      child: Column(
         children: <Widget>[
-          const UserAccountsDrawerHeader(
-            accountName: Text('Narges Farahi'),
-            accountEmail: Text('narges.farahi_354@example.com'),
-            currentAccountPicture: CircleAvatar(
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+            ),
+            accountName: const Text(
+              'Narges Farahi',
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+            accountEmail: const Text(
+              'narges.farahi_354@example.com',
+              style: TextStyle(color: Colors.grey),
+            ),
+            currentAccountPicture: const CircleAvatar(
               backgroundImage: NetworkImage('https://via.placeholder.com/150'),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home'),
-            onTap: () => Navigator.pop(context),
-          ),
-          const ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text('Favorites'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.star),
-            title: Text('Stars'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.call),
-            title: Text('Call Us'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
-          const Divider(),
-          const ListTile(
-            leading: Icon(Icons.help),
-            title: Text('Help'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Log out'),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                _buildDrawerItem(Icons.home, 'Home', () {
+                  Navigator.pop(context);
+                }),
+                _buildDrawerItem(Icons.favorite, 'Favorites', () {}),
+                _buildDrawerItem(Icons.star, 'Stars', () {}),
+                _buildDrawerItem(Icons.person, 'Profile', () {}),
+                _buildDrawerItem(Icons.call, 'Contact Us', () {}),
+                _buildDrawerItem(Icons.logout, 'Log out', () {}),
+              ],
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.black54),
+      title: Text(title, style: const TextStyle(fontSize: 16)),
+      onTap: onTap,
+      horizontalTitleGap: 10,
     );
   }
 }

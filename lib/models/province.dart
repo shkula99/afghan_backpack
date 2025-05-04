@@ -1,34 +1,31 @@
 class Province {
+  final int id;
   final String name;
-  final String image;
-  final String about;
+  final String description;
+  final String image; // <--- main cover image
   final double latitude;
   final double longitude;
-  final List<String> photos;
   final String locationUrl;
 
   Province({
+    required this.id,
     required this.name,
+    required this.description,
     required this.image,
-    required this.about,
     required this.latitude,
     required this.longitude,
-    required this.photos,
     required this.locationUrl,
   });
 
-  // New: Create Province from a Map (for SQLite)
   factory Province.fromMap(Map<String, dynamic> map) {
     return Province(
-      name: map['name'] ?? '',
-      image: map['image'] ?? '',
-      about: map['about'] ?? '',
-      latitude: (map['latitude'] as num).toDouble(),
-      longitude: (map['longitude'] as num).toDouble(),
-      photos: (map['photos'] as String).split(','),
-      // photos saved as comma-separated string
-      locationUrl: map['locationUrl'] ?? '',
+      id: map['id'] ?? 0, // Default value for id if null
+      name: map['name'] ?? 'none', // Default value for name if null
+      description: map['description'] ?? 'No description available', // Default value for about if null
+      image: map['image'] ?? '', // Default value for image if null
+      latitude: map['latitude'] ?? 0.0, // Default value for latitude if null
+      longitude: map['longitude'] ?? 0.0, // Default value for longitude if null
+      locationUrl: map['location_url'] ?? '',
     );
   }
-
 }

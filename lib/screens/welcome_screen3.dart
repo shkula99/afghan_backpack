@@ -22,7 +22,7 @@ class Welcomescreen3 extends StatelessWidget {
                     bottomRight: Radius.circular(30),
                   ),
                   child: Image.asset(
-                    'assets/images/screen_images/wl_screen3.jpg',
+                    'assets/images/screen_images/wl_screen3.webp',
                     height: MediaQuery.of(context).size.height * 0.52,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -127,14 +127,7 @@ class Welcomescreen3 extends StatelessWidget {
                       builder: (context) => HomePage(),
                     ),
                   );
-                },
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
+                }
               ),
             ),
           ],

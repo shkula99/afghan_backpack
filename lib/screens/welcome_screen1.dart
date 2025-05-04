@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import 'welcome_screen2.dart';
@@ -21,7 +20,7 @@ class Welcomescreen1 extends StatelessWidget {
                     bottomRight: Radius.circular(30),
                   ),
                   child: Image.asset(
-                    'assets/images/screen_images/wl_screen.jpg',
+                    'assets/images/screen_images/wl_screen1.webp',
                     height: MediaQuery.of(context).size.height * 0.52,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -57,23 +56,23 @@ class Welcomescreen1 extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Welcomescreen2()),
+                                builder: (context) => const Welcomescreen2(),
+                              ),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kButtonBackgroundColor,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 100, vertical: 16),
+                              horizontal: 100,
+                              vertical: 16,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
                           child: const Text(
                             "Next",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: kTextColor,
-                            ),
+                            style: TextStyle(fontSize: 18, color: kTextColor),
                           ),
                         ),
                       ],
@@ -90,16 +89,10 @@ class Welcomescreen1 extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const Welcomescreen2()),
+                      builder: (context) => const Welcomescreen2(),
+                    ),
                   );
                 },
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(
-                    color: kTextColor,
-                    fontSize: 16,
-                  ),
-                ),
               ),
             ),
           ],

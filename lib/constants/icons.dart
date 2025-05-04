@@ -15,7 +15,7 @@ class _ListIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/images/icons/listIcon.png',
+      'assets/images/icons/listIcon.webp',
       width: 24,
       height: 24,
       fit: BoxFit.contain,

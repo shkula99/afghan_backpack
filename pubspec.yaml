@@ -67,12 +67,43 @@ flutter:
   assets:
     - assets/database/afghan_backpack.db
     - assets/images/
+    - assets/images/balkh/
+    - assets/images/kabul/
+    - assets/images/herat/
+    - assets/images/bamiyan/
     - assets/images/icons/
     - assets/images/screen_images/
-    - assets/images/herat_hotels/
-    - assets/images/herat_resturants/parmis/
+    - assets/images/herat_resturants/
+    - assets/images/herat_resturants/golbarg_resturant/
+    - assets/images/herat_resturants/herat_serena_restaurant/
+    - assets/images/herat_resturants/parmis_resturant/
+    - assets/images/herat_resturants/turki_niayesh_resturant/
+    - assets/images/kabul_restuarants/
+    - assets/images/kabul_restuarants/barg_continental_restaurant/
+    - assets/images/kabul_restuarants/kabul_house_restaurant/
+    - assets/images/kabul_restuarants/lucky_town_restaurant/
+    - assets/images/kabul_restuarants/sufi_mahal_restaurant/
+    - assets/images/kabul_restuarants/suleiman_palace_restaurant/
+    - assets/images/kabul_restuarants/ziyafat_restaurant/
+    - assets/images/balkh_restaurants/
     - assets/images/balkh_restaurants/kefayat_turkish_restaurant/
-#    - images/balkh_restaurants/kefayat_turkish_restaurant/1.JPG
+    - assets/images/balkh_restaurants/ehsan_palaw_restaurant/
+    - assets/images/balkh_restaurants/sai_restaurant/
+    - assets/images/balkh_restaurants/mansor_restaurant/
+    - assets/images/balkh_restaurants/balkh_bastan_restaurant/
+    - assets/images/balkh_hotels/
+    - assets/images/balkh_hotels/burji_ghazanfar_hotel/
+    - assets/images/balkh_hotels/golden_castle_hotel/
+    - assets/images/balkh_hotels/burji_ghazanfar_hotel/
+    - assets/images/bamiyan_hotels/
+    - assets/images/bamiyan_restaurants/highland_restaurant/
+    - assets/images/bamiyan_restaurants/gholghola_restaurant/
+    - assets/images/bamiyan_restaurants/silk_road_restaurant/
+    - assets/images/bamiyan_hotels/gholghola_hotel/
+    - assets/images/bamiyan_hotels/highland_hotel/
+    - assets/images/bamiyan_hotels/noorband_qala_hotel/
+    - assets/images/bamiyan_hotels/royal_hotel/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
