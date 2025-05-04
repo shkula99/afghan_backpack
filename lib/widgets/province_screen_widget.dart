@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/balkh_screens/balkh_restaurants_list.dart';
 import 'package:untitled1/screens/bamiyan_screens/bamiyan_restaurants_list.dart';
+import 'package:untitled1/screens/herat_screens/herat_hotels_list.dart';
+import 'package:untitled1/screens/kabul_screens/kabul_hotels_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../database/db_helper.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
 import '../screens/balkh_screens/balkh_hotels_list.dart';
+import '../screens/bamiyan_screens/bamiyan_hotels_list.dart';
 import '../screens/herat_screens/herat_restaraunts_list.dart';
 import '../screens/kabul_screens/kabul_restuarants_list.dart';
 import '../services/weather_service.dart'; // Import your DatabaseHelper
@@ -300,7 +303,7 @@ class ProvinceScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => BamiyanRestaurantsScreen(),
+                                      (context) => BamiyanHotelsScreen(),
                                 ),
                               );
                             } else if (province.id == 2) {
@@ -308,7 +311,7 @@ class ProvinceScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => HeratRestaurantsScreen(),
+                                      (context) => HeratHotelsScreen(),
                                 ),
                               );
                             } else if (province.id == 1) {
@@ -316,7 +319,7 @@ class ProvinceScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => KabulRestaurantsScreen(),
+                                      (context) => KabulHotelsScreen(),
                                 ),
                               );
                             }
