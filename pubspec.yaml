@@ -40,6 +40,7 @@ dependencies:
   http: ^1.3.0
   google_fonts: ^6.2.1
   path_provider: ^2.1.5
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,10 @@ flutter:
     - assets/images/balkh_hotels/golden_castle_hotel/
     - assets/images/balkh_hotels/burji_ghazanfar_hotel/
     - assets/images/bamiyan_hotels/
+    - assets/images/bamiyan_hotels/gholghola_hotel/
+    - assets/images/bamiyan_hotels/highland_hotel/
+    - assets/images/bamiyan_hotels/noorband_qala_hotel/
+    - assets/images/bamiyan_hotels/royal_hotel/
     - assets/images/bamiyan_restaurants/highland_restaurant/
     - assets/images/bamiyan_restaurants/gholghola_restaurant/
     - assets/images/bamiyan_restaurants/silk_road_restaurant/
@@ -103,6 +108,18 @@ flutter:
     - assets/images/bamiyan_hotels/highland_hotel/
     - assets/images/bamiyan_hotels/noorband_qala_hotel/
     - assets/images/bamiyan_hotels/royal_hotel/
+    - assets/images/kabul_hotels/
+    - assets/images/kabul_hotels/hotel_safi_landmark/
+    - assets/images/kabul_hotels/intercontinental_hotel_kabul/
+    - assets/images/kabul_hotels/kabul_star_hotel/
+    - assets/images/kabul_hotels/serena_hotel_kabul/
+    - assets/images/herat_hotels/
+    - assets/images/herat_hotels/Arg_hotel/
+    - assets/images/herat_hotels/international_tejarat_hotel/
+    - assets/images/herat_hotels/nazary_hotel/
+    - assets/images/herat_hotels/sadaf_international_hotel/
+
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

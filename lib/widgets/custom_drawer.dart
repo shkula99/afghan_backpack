@@ -1,5 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/about_us_screen.dart';
+import 'package:untitled1/screens/home_page.dart'; // Import HomePage
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -7,23 +8,34 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
       child: Column(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            accountName: const Text(
-              'Narges Farahi',
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-            accountEmail: const Text(
-              'narges.farahi_354@example.com',
-              style: TextStyle(color: Colors.grey),
-            ),
-            currentAccountPicture: const CircleAvatar(
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+          Container(
+            width: double.infinity,
+            height: 200,
+            color: Colors.blueAccent,
+            child: Padding(
+              padding: EdgeInsets.only(left: 20, top: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('assets/images/bag.webp'),
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Afghan Backpack',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -32,12 +44,24 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 _buildDrawerItem(Icons.home, 'Home', () {
                   Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomePage()),
+                  );
                 }),
-                _buildDrawerItem(Icons.favorite, 'Favorites', () {}),
-                _buildDrawerItem(Icons.star, 'Stars', () {}),
-                _buildDrawerItem(Icons.person, 'Profile', () {}),
-                _buildDrawerItem(Icons.call, 'Contact Us', () {}),
-                _buildDrawerItem(Icons.logout, 'Log out', () {}),
+                _buildDrawerItem(Icons.call, 'About Us', () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutScreen(),
+                    ),
+                  );
+                }),
+                _buildDrawerItem(Icons.logout, 'Log out', () {
+                  Navigator.pop(context);
+                  // Add logout logic here
+                }),
               ],
             ),
           ),
@@ -52,6 +76,11 @@ class CustomDrawer extends StatelessWidget {
       title: Text(title, style: const TextStyle(fontSize: 16)),
       onTap: onTap,
       horizontalTitleGap: 10,
+      tileColor: Colors.transparent,
+      selectedTileColor: Colors.grey[300],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
     );
   }
 }
