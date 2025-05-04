@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import '../models/hotel.dart';
+import '../models/hotel_photo.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
 import '../models/restaurant.dart';
@@ -26,7 +28,7 @@ class DatabaseHelper {
     final path = join(databasesPath, 'afghan_backpack.db');
 
     // Print database path for debugging
-    print('Database path: $path');
+    //print('Database path: $path');
 
     // Check if the database exists
     final exists = await databaseExists(path);
@@ -60,7 +62,7 @@ class DatabaseHelper {
     final tables = await db.rawQuery(
       'SELECT name FROM sqlite_master WHERE type="table"',
     );
-    print('Tables in database: $tables');
+    //print('Tables in database: $tables');
 
     return db;
   }
@@ -107,6 +109,8 @@ class DatabaseHelper {
       return ProvincePhoto.fromMap(maps[i]);
     });
   }
+
+  // Restaurant Part
 
   // Fetch all restaurants
   Future<List<Restaurant>> fetchRestaurants() async {
@@ -176,4 +180,85 @@ class DatabaseHelper {
       return RestaurantPhoto.fromMap(maps[i]);
     });
   }
+
+
+
+// Hotel Part
+
+  // Fetch all hotels
+  Future<List<Hotel>> fetchHotels() async {
+    final db = await database;
+
+    // Load all hotels
+    final List<Map<String, dynamic>> hotelMaps = await db.query(
+      'hotels',
+    );
+
+    // Load all hotels photos
+    final List<Map<String, dynamic>> photoMaps = await db.query(
+      'hotels_photos',
+    );
+
+    // Convert to HotelPhoto objects
+    List<HotelPhoto> allPhotos =
+    photoMaps.map((map) => HotelPhoto.fromMap(map)).toList();
+
+    // Map each hotel with its photos
+    return hotelMaps.map((hotelMap) {
+      final hotelPhotos =
+      allPhotos
+          .where((photo) => photo.hotelId == hotelMap['id'])
+          .toList();
+
+      return Hotel.fromMap(hotelMap, hotelPhotos);
+    }).toList();
+  }
+
+
+  // Fetch a single hotel by ID
+  Future<Hotel?> fetchHotelById(int id) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> hotelMaps = await db.query(
+      'hotels',
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+
+    if (hotelMaps.isEmpty) return null;
+
+    final List<Map<String, dynamic>> photoMaps = await db.query(
+      'hotels_photos',
+      where: 'hotel_id = ?',
+      whereArgs: [id],
+    );
+
+    List<HotelPhoto> hotelPhotos =
+    photoMaps.map((map) => HotelPhoto.fromMap(map)).toList();
+
+    return Hotel.fromMap(hotelMaps.first, hotelPhotos);
+  }
+
+  // Fetch all photos of a specific hotel
+  Future<List<HotelPhoto>> fetchHotelPhotos(int hotelId) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'hotels_photos',
+      where: 'hotel_id = ?',
+      whereArgs: [hotelId],
+    );
+
+    return List.generate(maps.length, (i) {
+      return HotelPhoto.fromMap(maps[i]);
+    });
+  }
+
+
+
+
+
+  // Historical Places Part
+
 }

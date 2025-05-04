@@ -95,7 +95,7 @@ flutter:
     - assets/images/balkh_hotels/
     - assets/images/balkh_hotels/burji_ghazanfar_hotel/
     - assets/images/balkh_hotels/golden_castle_hotel/
-    - assets/images/balkh_hotels/burji_ghazanfar_hotel/
+    - assets/images/balkh_hotels/rahat_hotel/
     - assets/images/bamiyan_hotels/
     - assets/images/bamiyan_hotels/gholghola_hotel/
     - assets/images/bamiyan_hotels/highland_hotel/
@@ -114,7 +114,7 @@ flutter:
     - assets/images/kabul_hotels/kabul_star_hotel/
     - assets/images/kabul_hotels/serena_hotel_kabul/
     - assets/images/herat_hotels/
-    - assets/images/herat_hotels/Arg_hotel/
+    - assets/images/herat_hotels/Arg_herat/
     - assets/images/herat_hotels/international_tejarat_hotel/
     - assets/images/herat_hotels/nazary_hotel/
     - assets/images/herat_hotels/sadaf_international_hotel/

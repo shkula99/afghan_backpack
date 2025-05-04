@@ -5,13 +5,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../database/db_helper.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
+import '../screens/balkh_screens/balkh_hotels_list.dart';
 import '../screens/herat_screens/herat_restaraunts_list.dart';
 import '../screens/kabul_screens/kabul_restuarants_list.dart';
 import '../services/weather_service.dart'; // Import your DatabaseHelper
 
 class ProvinceScreen extends StatelessWidget {
   final Province province;
-
 
   const ProvinceScreen({Key? key, required this.province}) : super(key: key);
 
@@ -285,39 +285,82 @@ class ProvinceScreen extends StatelessWidget {
                           'Historical Places',
                         ),
                         categoryIcon('assets/images/icons/park.webp', 'Parks'),
-                        categoryIcon('assets/images/icons/hotel.webp', 'Hotels'),
                         GestureDetector(
                           onTap: () {
-                            if(province.id == 3){
+                            if (province.id == 3) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BalkhRestaurantsScreen(),
+                                  builder:
+                                      (context) => BalkhHotelsScreen(),
                                 ),
                               );
-                            } else if(province.id ==4){
+                            } else if (province.id == 4) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BamiyanRestaurantsScreen(),
+                                  builder:
+                                      (context) => BamiyanRestaurantsScreen(),
                                 ),
                               );
-                            } else if(province.id ==2){
+                            } else if (province.id == 2) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HeratRestaurantsScreen(),
+                                  builder:
+                                      (context) => HeratRestaurantsScreen(),
                                 ),
                               );
-                            } else if(province.id ==1){
+                            } else if (province.id == 1) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => KabulRestaurantsScreen(),
+                                  builder:
+                                      (context) => KabulRestaurantsScreen(),
                                 ),
                               );
                             }
-
+                          },
+                          child: categoryIcon(
+                            'assets/images/icons/hotel.webp',
+                            'Hotels',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (province.id == 3) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => BalkhRestaurantsScreen(),
+                                ),
+                              );
+                            } else if (province.id == 4) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => BamiyanRestaurantsScreen(),
+                                ),
+                              );
+                            } else if (province.id == 2) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => HeratRestaurantsScreen(),
+                                ),
+                              );
+                            } else if (province.id == 1) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => KabulRestaurantsScreen(),
+                                ),
+                              );
+                            }
                           },
                           child: categoryIcon(
                             'assets/images/icons/restaurant.webp',
