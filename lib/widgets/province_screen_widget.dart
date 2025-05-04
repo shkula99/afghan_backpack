@@ -10,7 +10,10 @@ import '../models/province_photo.dart';
 import '../screens/balkh_screens/balkh_hotels_list.dart';
 import '../screens/balkh_screens/balkh_parks_list.dart';
 import '../screens/bamiyan_screens/bamiyan_hotels_list.dart';
+import '../screens/bamiyan_screens/bamiyan_parks_list.dart';
+import '../screens/herat_screens/herat_park_list.dart';
 import '../screens/herat_screens/herat_restaraunts_list.dart';
+import '../screens/kabul_screens/kabul_park_list.dart';
 import '../screens/kabul_screens/kabul_restuarants_list.dart';
 import '../services/weather_service.dart'; // Import your DatabaseHelper
 
@@ -301,21 +304,21 @@ class ProvinceScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BamiyanHotelsScreen(),
+                                  builder: (context) => BamiyanParksScreen(),
                                 ),
                               );
                             } else if (province.id == 2) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HeratHotelsScreen(),
+                                  builder: (context) => HeratParksScreen(),
                                 ),
                               );
                             } else if (province.id == 1) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => KabulHotelsScreen(),
+                                  builder: (context) => KabulParksScreen(),
                                 ),
                               );
                             }
