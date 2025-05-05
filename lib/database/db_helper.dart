@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:untitled1/models/historical_place.dart';
+import '../models/historical_place_photo.dart';
 import '../models/hotel.dart';
 import '../models/hotel_photo.dart';
 import '../models/park.dart';
@@ -262,6 +264,77 @@ class DatabaseHelper {
 
 
   // Historical Places Part
+
+  // Fetch all historical places
+  Future<List<HistoricalPlace>> fetchHistoricalPlaces() async {
+    final db = await database;
+
+    // Load all historical
+    final List<Map<String, dynamic>> historicalPlaceMaps = await db.query(
+      'historical_places',
+    );
+
+    // Load all historical photos
+    final List<Map<String, dynamic>> photoMaps = await db.query(
+      'historical_places_photos',
+    );
+
+    // Convert to HistoricalPhoto objects
+    List<HistoricalPlacePhoto> allPhotos =
+    photoMaps.map((map) => HistoricalPlacePhoto.fromMap(map)).toList();
+
+    // Map each historical with its photos
+    return historicalPlaceMaps.map((historicalPlaceMap) {
+      final historicalPlacePhotos =
+      allPhotos
+          .where((photo) => photo.historicalPlaceId == historicalPlaceMap['id'])
+          .toList();
+
+      return HistoricalPlace.fromMap(historicalPlaceMap, historicalPlacePhotos);
+    }).toList();
+  }
+
+
+  // Fetch a single historical by ID
+  Future<HistoricalPlace?> fetchHistoricalPlaceById(int id) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> historicalPlaceMaps = await db.query(
+      'historical_places',
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+
+    if (historicalPlaceMaps.isEmpty) return null;
+
+    final List<Map<String, dynamic>> photoMaps = await db.query(
+      'historical_places_photos',
+      where: 'historical_place_id = ?',
+      whereArgs: [id],
+    );
+
+    List<HistoricalPlacePhoto> historicalPlacePhotos =
+    photoMaps.map((map) => HistoricalPlacePhoto.fromMap(map)).toList();
+
+    return HistoricalPlace.fromMap(historicalPlaceMaps.first, historicalPlacePhotos);
+  }
+
+  // Fetch all photos of a specific historical place
+  Future<List<HistoricalPlacePhoto>> fetchHistoricalPlacePhotos(int historicalPlaceId) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'historical_places_photos',
+      where: 'historical_place_id = ?',
+      whereArgs: [historicalPlaceId],
+    );
+
+    return List.generate(maps.length, (i) {
+      return HistoricalPlacePhoto.fromMap(maps[i]);
+    });
+  }
+
 
 
 

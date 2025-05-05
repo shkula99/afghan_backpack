@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../database/db_helper.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
+import '../screens/balkh_screens/balkh_historical_places_list.dart';
 import '../screens/balkh_screens/balkh_hotels_list.dart';
 import '../screens/balkh_screens/balkh_parks_list.dart';
 import '../screens/bamiyan_screens/bamiyan_hotels_list.dart';
@@ -287,12 +288,45 @@ class ProvinceScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        categoryIcon(
-                          'assets/images/icons/historical_place.webp',
-                          'Historical Places',
-                        ),
                         GestureDetector(
                           onTap: (){
+                            if (province.id == 3) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BalkhHistoricalPlacesScreen(),
+                                ),
+                              );
+                            } else if (province.id == 4) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BamiyanParksScreen(),
+                                ),
+                              );
+                            } else if (province.id == 2) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HeratParksScreen(),
+                                ),
+                              );
+                            } else if (province.id == 1) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => KabulParksScreen(),
+                                ),
+                              );
+                            }
+                          },
+                          child: categoryIcon(
+                            'assets/images/icons/historical_place.webp',
+                            'Historical Places',
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
                             if (province.id == 3) {
                               Navigator.push(
                                 context,

@@ -140,7 +140,31 @@ flutter:
     - assets/images/bamiyan_parks/bande_amir/
     - assets/images/bamiyan_parks/foladi_valley/
     - assets/images/bamiyan_parks/kallow_valley/
-
+    - assets/images/balkh_historical_places/
+    - assets/images/balkh_historical_places/abu_nasar_parsa/
+    - assets/images/balkh_historical_places/bala_hisar_balkh/
+    - assets/images/balkh_historical_places/noh_gonbad_mosque/
+    - assets/images/balkh_historical_places/rabia_balkhi_domb/
+    - assets/images/balkh_historical_places/rawza_mubark/
+    - assets/images/balkh_historical_places/rumi_house/
+    - assets/images/bamiyan_historical_places/
+    - assets/images/bamiyan_historical_places/buddahs_bamiyan/
+    - assets/images/bamiyan_historical_places/dara_e_adjdahar/
+    - assets/images/bamiyan_historical_places/gholghola_city/
+    - assets/images/bamiyan_historical_places/kakark_valley/
+    - assets/images/bamiyan_historical_places/zohak_city/
+    - assets/images/herat_historical_places/
+    - assets/images/herat_historical_places/herat_grand_mosque/
+    - assets/images/herat_historical_places/herat_menar/
+    - assets/images/herat_historical_places/pol_malan/
+    - assets/images/herat_historical_places/qaleh_ekhtiardin/
+    - assets/images/herat_historical_places/sultan_hussein_bayqara_school/
+    - assets/images/herat_historical_places/tomb_of_khwaja_abdullah_ansari/
+    - assets/images/kabul_historical_places/
+    - assets/images/kabul_historical_places/babur_garden/
+    - assets/images/kabul_historical_places/bala_hissar_fort/
+    - assets/images/kabul_historical_places/chihil_sutun_palace/
+    - assets/images/kabul_historical_places/darul_aman_palace/
 
 
 
