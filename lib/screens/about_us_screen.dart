@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -10,7 +10,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('About'),
-        leading: BackButton(),
+        leading: const BackButton(),
         backgroundColor: Colors.blueAccent,
       ),
       body: SingleChildScrollView(
@@ -20,7 +20,7 @@ class AboutScreen extends StatelessWidget {
             CircleAvatar(
               radius: 65,
               backgroundColor: Colors.blue.shade100,
-              backgroundImage: AssetImage('assets/images/bag.webp'),
+              backgroundImage: const AssetImage('assets/images/bag.webp'),
             ),
             const SizedBox(height: 10),
             const Text(
@@ -41,9 +41,21 @@ class AboutScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            _buildDeveloper("Shkula Noorza", FontAwesomeIcons.twitter),
-            _buildDeveloper("Narges Farahi", FontAwesomeIcons.twitter),
-            _buildDeveloper("Fatameh Mahdizada", FontAwesomeIcons.twitter),
+            _buildDeveloper(
+              "Shkula Noorzai",
+              FontAwesomeIcons.xTwitter,
+              'https://x.com/ShkulaN?t=60B53XYIvO5gmbmQ69L-cA&s=35',
+            ),
+            _buildDeveloper(
+              "Narges Farahi",
+              FontAwesomeIcons.xTwitter,
+              'https://x.com/FarahiNarg21721?t=auqqO9agHfelBPKI-SW-rg&s=35',
+            ),
+            _buildDeveloper(
+              "Fatameh Mahdizada",
+              FontAwesomeIcons.xTwitter,
+              'https://x.com/FMadizada90174?t=LH4jUwWYzSK6sm--JswqdQ&s=35',
+            ),
             const Divider(),
             const Text(
               "Connect with us:",
@@ -52,51 +64,93 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                _SocialIcon(icon: Icons.email, color: Colors.amber),
-                _SocialIcon(icon: FontAwesomeIcons.twitter, color: Colors.lightBlue),
-                _SocialIcon(icon: FontAwesomeIcons.facebook, color: Colors.indigo),
-                _SocialIcon(icon: Icons.call, color: Colors.red),
+              children: [
+                _SocialIcon(
+                  icon: Icons.call,
+                  color: Colors.red,
+                  onTap: () => _launchURL('tel:0798300430'),
+                ),
+                _SocialIcon(
+                  icon: FontAwesomeIcons.xTwitter,
+                  color: Colors.black,
+                  onTap: () =>
+                      _launchURL('https://x.com/codetoinspire?lang=en'),
+                ),
+                _SocialIcon(
+                  icon: FontAwesomeIcons.instagram,
+                  color: Colors.pink,
+                  onTap: () =>
+                      _launchURL('https://www.instagram.com/codetoinspire/'),
+                ),
+                _SocialIcon(
+                  icon: FontAwesomeIcons.linkedin,
+                  color: Colors.blue,
+                  onTap: () => _launchURL(
+                      'https://www.linkedin.com/company/code-to-inspire'),
+                ),
+                _SocialIcon(
+                  icon: FontAwesomeIcons.facebook,
+                  color: Colors.indigo,
+                  onTap: () =>
+                      _launchURL('https://m.facebook.com/CodeToInspire/'),
+                ),
               ],
             ),
             const SizedBox(height: 20),
-            const Text("Version "),
+            const Text("Version 1.0.0"),
             const Text("© 2025 Code To Inspire"),
             const SizedBox(height: 20),
-
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDeveloper(String name, IconData icon) {
+  static Widget _buildDeveloper(String name, IconData icon, String url) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
       child: Card(
         elevation: 2,
         child: ListTile(
           title: Text(name),
-          trailing: Icon(icon, color: Colors.teal),
+          trailing: IconButton(
+            icon: Icon(icon, color: Colors.teal),
+            onPressed: () => _launchURL(url),
+          ),
         ),
       ),
     );
+  }
+
+  static Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch $url';
+    }
   }
 }
 
 class _SocialIcon extends StatelessWidget {
   final IconData icon;
   final Color color;
+  final VoidCallback onTap;
 
-  const _SocialIcon({required this.icon, required this.color});
+  const _SocialIcon({
+    required this.icon,
+    required this.color,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: CircleAvatar(
-        backgroundColor: color,
-        child: Icon(icon, color: Colors.white),
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          child: Icon(icon, color: color),
+        ),
       ),
     );
   }
