@@ -7,8 +7,8 @@ import 'screens/splash_screen.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await deleteOldDatabase();
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await deleteOldDatabase();
   runApp(MyApp());
 }
 

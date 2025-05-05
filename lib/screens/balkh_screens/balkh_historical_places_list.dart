@@ -26,10 +26,10 @@ class _BalkhHistoricalPlacesScreenState extends State<BalkhHistoricalPlacesScree
   // Function to fetch parks data from the database
   Future<List<HistoricalPlace>> _fetchHistoricalPlaces() async {
     final dbHelper = DatabaseHelper();
-    final allParks = await dbHelper.fetchHistoricalPlaces();
+    final allHistoricalPlaces = await dbHelper.fetchHistoricalPlaces();
 
     // Only select historical places from Balkh
-    final balkhHistoricalPlaces = allParks.where((historicalPlace) => historicalPlace.provinceId == 3).toList();
+    final balkhHistoricalPlaces = allHistoricalPlaces.where((historicalPlace) => historicalPlace.provinceId == 3).toList();
 
     return balkhHistoricalPlaces;
   }
@@ -87,7 +87,7 @@ class _BalkhHistoricalPlacesScreenState extends State<BalkhHistoricalPlacesScree
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Parks', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                    child: Text('Historical Places', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                   ),
                 ),
 

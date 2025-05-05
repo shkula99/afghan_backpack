@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/screens/balkh_screens/balkh_restaurants_list.dart';
+import 'package:untitled1/screens/bamiyan_screens/bamiyan_historical_places_list.dart';
 import 'package:untitled1/screens/bamiyan_screens/bamiyan_restaurants_list.dart';
+import 'package:untitled1/screens/herat_screens/herat_historical_places_list.dart';
 import 'package:untitled1/screens/herat_screens/herat_hotels_list.dart';
+import 'package:untitled1/screens/kabul_screens/kabul_historical_places_list.dart';
 import 'package:untitled1/screens/kabul_screens/kabul_hotels_list.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../database/db_helper.dart';
@@ -301,21 +304,21 @@ class ProvinceScreen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => BamiyanParksScreen(),
+                                  builder: (context) => BamiyanHistoricalPlacesScreen(),
                                 ),
                               );
                             } else if (province.id == 2) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HeratParksScreen(),
+                                  builder: (context) => HeratHistoricalPlacesScreen(),
                                 ),
                               );
                             } else if (province.id == 1) {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => KabulParksScreen(),
+                                  builder: (context) => KabulHistoricalPlacesScreen(),
                                 ),
                               );
                             }
