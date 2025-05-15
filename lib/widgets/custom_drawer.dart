@@ -58,7 +58,7 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   );
                 }),
-                _buildDrawerItem(Icons.logout, 'Log out', () {
+                _buildDrawerItem(Icons.logout, 'Exit', () {
                   Navigator.pop(context);
                   // Add logout logic here
                 }),
