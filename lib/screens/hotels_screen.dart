@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/models/hotel.dart';
 import '../../database/db_helper.dart';
-import '../../widgets/hotel_card.dart';
+import '../../widgets/place_card.dart';
 import '../../widgets/hotel_screen_widget.dart';
 
 class HotelsScreen extends StatefulWidget {
@@ -105,7 +105,7 @@ class _HotelsScreenState extends State<HotelsScreen> {
                       ),
                       itemBuilder: (context, index) {
                         final hotel = hotels[index];
-                        return HotelCard(
+                        return PlaceCard(
                           name: hotel.name,
                           image: hotel.image,
                           description: '${widget.provinceName}, Afghanistan',

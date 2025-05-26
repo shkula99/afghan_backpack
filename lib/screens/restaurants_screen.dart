@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../models/restaurant.dart';
 import '../../database/db_helper.dart';
-import '../../widgets/restaurant_card.dart';
 import '../../widgets/restaurant_screen_widget.dart';
+import '../widgets/place_card.dart';
 
 class RestaurantsScreen extends StatefulWidget {
   final int provinceId;
@@ -105,7 +105,7 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
                       ),
                       itemBuilder: (context, index) {
                         final restaurant = restaurants[index];
-                        return RestaurantCard(
+                        return PlaceCard(
                           name: restaurant.name,
                           image: restaurant.image,
                           description: '${widget.provinceName}, Afghanistan',

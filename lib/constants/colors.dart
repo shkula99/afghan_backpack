@@ -12,5 +12,5 @@ const kBoxDecoration2Color = Color(0xFFCAE9FF);
 const kListIconColor = Colors.black87;
 const kStarIconColor = Colors.amber;
 const kFontColor = Colors.black;
-final kLocationColor = Colors.grey[700];
+final kLocationColor = Colors.grey[900];
 

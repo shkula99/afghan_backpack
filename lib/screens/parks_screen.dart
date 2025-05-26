@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../models/park.dart';
 import '../../database/db_helper.dart';
-import '../../widgets/park_card.dart';
 import '../../widgets/park_screen_widget.dart';
+import '../widgets/place_card.dart';
 
 class ParksScreen extends StatefulWidget {
   final int provinceId;
@@ -105,7 +105,7 @@ class _ParksScreenState extends State<ParksScreen> {
                       ),
                       itemBuilder: (context, index) {
                         final park = parks[index];
-                        return ParkCard(
+                        return PlaceCard(
                           name: park.name,
                           image: park.image,
                           description: '${widget.provinceName}, Afghanistan',

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../database/db_helper.dart';
 import '../../models/historical_place.dart';
-import '../../widgets/historical_place_card.dart';
 import '../../widgets/historical_place_screen_widget.dart';
+import '../widgets/place_card.dart';
 
 class HistoricalPlacesScreen extends StatefulWidget {
   final int provinceId;
@@ -103,7 +103,7 @@ class _HistoricalPlacesScreenState extends State<HistoricalPlacesScreen> {
                       ),
                       itemBuilder: (context, index) {
                         final historicalPlace = historicalPlaces[index];
-                        return HistoricalPlaceCard(
+                        return PlaceCard(
                           name: historicalPlace.name,
                           image: historicalPlace.image,
                           description: '${widget.provinceName}, Afghanistan',
