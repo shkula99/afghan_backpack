@@ -1,64 +1,61 @@
 import 'package:flutter/material.dart';
-
+import 'package:untitled1/models/hotel.dart';
 import '../../database/db_helper.dart';
-import '../../models/park.dart';
-import '../../widgets/park_card.dart';
-import '../../widgets/park_screen_widget.dart';
+import '../../widgets/hotel_card.dart';
+import '../../widgets/hotel_screen_widget.dart';
 
+class HotelsScreen extends StatefulWidget {
+  final int provinceId;
+  final String provinceName;
 
-
-
-class BamiyanParksScreen extends StatefulWidget {
-
+  const HotelsScreen({
+    required this.provinceId,
+    required this.provinceName,
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<BamiyanParksScreen> createState() => _BamiyanParksScreenState();
+  State<HotelsScreen> createState() => _HotelsScreenState();
 }
 
-class _BamiyanParksScreenState extends State<BamiyanParksScreen> {
-  late Future<List<Park>> _parksFuture;
+class _HotelsScreenState extends State<HotelsScreen> {
+  late Future<List<Hotel>> _hotelsFuture;
 
   @override
   void initState() {
     super.initState();
-    _parksFuture = _fetchParks();
+    _hotelsFuture = _fetchHotels();
   }
 
-  // Function to fetch parks data from the database
-  Future<List<Park>> _fetchParks() async {
+  Future<List<Hotel>> _fetchHotels() async {
     final dbHelper = DatabaseHelper();
-    final allParks = await dbHelper.fetchParks();
-
-    // Only select parks from Bamiyan
-    final bamiyanParks = allParks.where((park) => park.provinceId == 4).toList();
-
-    return bamiyanParks;
+    final allHotels = await dbHelper.fetchHotels();
+    return allHotels.where((hotel) => hotel.provinceId == widget.provinceId).toList();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFCEFEA),
       body: SafeArea(
-        child: FutureBuilder<List<Park>>(
-          future: _parksFuture,
+        child: FutureBuilder<List<Hotel>>(
+          future: _hotelsFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
               return Center(child: Text("Error: ${snapshot.error}"));
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text("No hotels found"));
+              return const Center(child: Text("No hotels found"));
             }
 
-            final parks = snapshot.data!;
+            final hotels = snapshot.data!;
 
             return Column(
               children: [
-                // Header section with back button and title
+                // Header
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   child: Row(
@@ -76,9 +73,9 @@ class _BamiyanParksScreenState extends State<BamiyanParksScreen> {
                         ),
                       ),
                       const SizedBox(width: 16),
-                      const Text(
-                        'Bamiyan',
-                        style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
+                      Text(
+                        widget.provinceName,
+                        style: const TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -88,18 +85,18 @@ class _BamiyanParksScreenState extends State<BamiyanParksScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Parks', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                    child: Text('Hotels', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                   ),
                 ),
 
                 const SizedBox(height: 16),
 
-                // GridView to display parks
+                // Grid View of Hotels
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: GridView.builder(
-                      itemCount: parks.length,
+                      itemCount: hotels.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
@@ -107,16 +104,16 @@ class _BamiyanParksScreenState extends State<BamiyanParksScreen> {
                         childAspectRatio: 0.7,
                       ),
                       itemBuilder: (context, index) {
-                        final park = parks[index];
-                        return ParkCard(
-                          name: park.name,
-                          image: park.image,
-                          description: 'Bamiyan, Afghanistan',
+                        final hotel = hotels[index];
+                        return HotelCard(
+                          name: hotel.name,
+                          image: hotel.image,
+                          description: '${widget.provinceName}, Afghanistan',
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ParkScreenWidget(parkId: park.id),
+                                builder: (context) => HotelScreenWidget(hotelId: hotel.id),
                               ),
                             );
                           },

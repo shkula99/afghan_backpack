@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled1/models/province.dart';
-import 'package:untitled1/widgets/province_screen_widget.dart';
+import 'package:untitled1/screens/province_screen.dart';
 import '../constants/icons.dart';
 import '../database/db_helper.dart';
 import '../widgets/city_card.dart';
@@ -18,25 +18,25 @@ class HomePage extends StatelessWidget {
     {
       'id': 1,
       'name': 'Kabul',
-      'location': 'eastern of AFG',
+      'location': 'East of AFG',
       'image': 'assets/images/Kabul.webp',
     },
     {
       'id': 2,
       'name': 'Herat',
-      'location': 'western of AFG',
+      'location': 'West of AFG',
       'image': 'assets/images/Herat.webp',
     },
     {
       'id': 3,
       'name': 'Balkh',
-      'location': 'northern of AFG',
+      'location': 'North of AFG',
       'image': 'assets/images/Balkh.webp',
     },
     {
       'id': 4,
       'name': 'Bamiyan',
-      'location': 'central of AFG',
+      'location': 'Centre of AFG',
       'image': 'assets/images/Bamiyan.webp',
     },
   ];

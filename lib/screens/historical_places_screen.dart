@@ -1,63 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/models/hotel.dart';
 import '../../database/db_helper.dart';
-import '../../widgets/hotel_card.dart';
-import '../../widgets/hotel_screen_widget.dart';
+import '../../models/historical_place.dart';
+import '../../widgets/historical_place_card.dart';
+import '../../widgets/historical_place_screen_widget.dart';
 
+class HistoricalPlacesScreen extends StatefulWidget {
+  final int provinceId;
+  final String provinceName;
 
-
-
-class HeratHotelsScreen extends StatefulWidget {
-
+  const HistoricalPlacesScreen({
+    Key? key,
+    required this.provinceId,
+    required this.provinceName,
+  }) : super(key: key);
 
   @override
-  State<HeratHotelsScreen> createState() => _HeratHotelsScreenState();
+  State<HistoricalPlacesScreen> createState() => _HistoricalPlacesScreenState();
 }
 
-class _HeratHotelsScreenState extends State<HeratHotelsScreen> {
-  late Future<List<Hotel>> _hotelsFuture;
+class _HistoricalPlacesScreenState extends State<HistoricalPlacesScreen> {
+  late Future<List<HistoricalPlace>> _historicalPlacesFuture;
 
   @override
   void initState() {
     super.initState();
-    _hotelsFuture = _fetchHotels();
+    _historicalPlacesFuture = _fetchHistoricalPlaces();
   }
 
-  // Function to fetch hotels data from the database
-  Future<List<Hotel>> _fetchHotels() async {
+  Future<List<HistoricalPlace>> _fetchHistoricalPlaces() async {
     final dbHelper = DatabaseHelper();
-    final allHotels = await dbHelper.fetchHotels();
-
-    // Only select hotels from Balkh
-    final heratHotels = allHotels.where((hotel) => hotel.provinceId == 2).toList();
-
-    return heratHotels;
+    final allHistoricalPlaces = await dbHelper.fetchHistoricalPlaces();
+    return allHistoricalPlaces
+        .where((place) => place.provinceId == widget.provinceId)
+        .toList();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFCEFEA),
       body: SafeArea(
-        child: FutureBuilder<List<Hotel>>(
-          future: _hotelsFuture,
+        child: FutureBuilder<List<HistoricalPlace>>(
+          future: _historicalPlacesFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
               return Center(child: Text("Error: ${snapshot.error}"));
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text("No hotels found"));
+              return const Center(child: Text("No historical places found"));
             }
 
-            final hotels = snapshot.data!;
+            final historicalPlaces = snapshot.data!;
 
             return Column(
               children: [
-                // Header section with back button and title
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   child: Row(
@@ -75,30 +74,27 @@ class _HeratHotelsScreenState extends State<HeratHotelsScreen> {
                         ),
                       ),
                       const SizedBox(width: 16),
-                      const Text(
-                        'Herat',
-                        style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
+                      Text(
+                        widget.provinceName,
+                        style: const TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
                 ),
-
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Hotels', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                    child: Text('Historical Places',
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                   ),
                 ),
-
                 const SizedBox(height: 16),
-
-                // GridView to display hotels
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: GridView.builder(
-                      itemCount: hotels.length,
+                      itemCount: historicalPlaces.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
@@ -106,16 +102,17 @@ class _HeratHotelsScreenState extends State<HeratHotelsScreen> {
                         childAspectRatio: 0.7,
                       ),
                       itemBuilder: (context, index) {
-                        final hotel = hotels[index];
-                        return HotelCard(
-                          name: hotel.name,
-                          image: hotel.image,
-                          description: 'Herat, Afghanistan',
+                        final historicalPlace = historicalPlaces[index];
+                        return HistoricalPlaceCard(
+                          name: historicalPlace.name,
+                          image: historicalPlace.image,
+                          description: '${widget.provinceName}, Afghanistan',
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HotelScreenWidget(hotelId: hotel.id),
+                                builder: (context) => HistoricalPlaceScreenWidget(
+                                    historicalPlaceId: historicalPlace.id),
                               ),
                             );
                           },

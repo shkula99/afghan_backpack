@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/models/hotel.dart';
-import '../../database/db_helper.dart';
 import '../../models/park.dart';
-import '../../widgets/hotel_card.dart';
-import '../../widgets/hotel_screen_widget.dart';
+import '../../database/db_helper.dart';
 import '../../widgets/park_card.dart';
 import '../../widgets/park_screen_widget.dart';
 
+class ParksScreen extends StatefulWidget {
+  final int provinceId;
+  final String provinceName;
 
-
-
-class BalkhParksScreen extends StatefulWidget {
-
+  const ParksScreen({
+    required this.provinceId,
+    required this.provinceName,
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<BalkhParksScreen> createState() => _BalkhParksScreenState();
+  State<ParksScreen> createState() => _ParksScreenState();
 }
 
-class _BalkhParksScreenState extends State<BalkhParksScreen> {
+class _ParksScreenState extends State<ParksScreen> {
   late Future<List<Park>> _parksFuture;
 
   @override
@@ -26,17 +27,11 @@ class _BalkhParksScreenState extends State<BalkhParksScreen> {
     _parksFuture = _fetchParks();
   }
 
-  // Function to fetch parks data from the database
   Future<List<Park>> _fetchParks() async {
     final dbHelper = DatabaseHelper();
     final allParks = await dbHelper.fetchParks();
-
-    // Only select parks from Balkh
-    final balkhParks = allParks.where((park) => park.provinceId == 3).toList();
-
-    return balkhParks;
+    return allParks.where((park) => park.provinceId == widget.provinceId).toList();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +42,20 @@ class _BalkhParksScreenState extends State<BalkhParksScreen> {
           future: _parksFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snapshot.hasError) {
               return Center(child: Text("Error: ${snapshot.error}"));
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text("No hotels found"));
+              return const Center(child: Text("No parks found"));
             }
 
             final parks = snapshot.data!;
 
             return Column(
               children: [
-                // Header section with back button and title
+                // Header
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   child: Row(
@@ -78,9 +73,9 @@ class _BalkhParksScreenState extends State<BalkhParksScreen> {
                         ),
                       ),
                       const SizedBox(width: 16),
-                      const Text(
-                        'Balkh',
-                        style: TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
+                      Text(
+                        widget.provinceName,
+                        style: const TextStyle(fontSize: 35, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -96,7 +91,7 @@ class _BalkhParksScreenState extends State<BalkhParksScreen> {
 
                 const SizedBox(height: 16),
 
-                // GridView to display parks
+                // Grid View
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -113,7 +108,7 @@ class _BalkhParksScreenState extends State<BalkhParksScreen> {
                         return ParkCard(
                           name: park.name,
                           image: park.image,
-                          description: 'Balkh, Afghanistan',
+                          description: '${widget.provinceName}, Afghanistan',
                           onTap: () {
                             Navigator.push(
                               context,

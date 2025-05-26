@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:untitled1/screens/balkh_screens/balkh_restaurants_list.dart';
-import 'package:untitled1/screens/bamiyan_screens/bamiyan_historical_places_list.dart';
-import 'package:untitled1/screens/bamiyan_screens/bamiyan_restaurants_list.dart';
-import 'package:untitled1/screens/herat_screens/herat_historical_places_list.dart';
-import 'package:untitled1/screens/herat_screens/herat_hotels_list.dart';
-import 'package:untitled1/screens/kabul_screens/kabul_historical_places_list.dart';
-import 'package:untitled1/screens/kabul_screens/kabul_hotels_list.dart';
+import 'package:untitled1/screens/hotels_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../database/db_helper.dart';
 import '../models/province.dart';
 import '../models/province_photo.dart';
-import '../screens/balkh_screens/balkh_historical_places_list.dart';
-import '../screens/balkh_screens/balkh_hotels_list.dart';
-import '../screens/balkh_screens/balkh_parks_list.dart';
-import '../screens/bamiyan_screens/bamiyan_hotels_list.dart';
-import '../screens/bamiyan_screens/bamiyan_parks_list.dart';
-import '../screens/herat_screens/herat_park_list.dart';
-import '../screens/herat_screens/herat_restaraunts_list.dart';
-import '../screens/kabul_screens/kabul_park_list.dart';
-import '../screens/kabul_screens/kabul_restuarants_list.dart';
+import 'historical_places_screen.dart';
+import 'parks_screen.dart';
+import 'restaurants_screen.dart';
 import '../services/weather_service.dart'; // Import your DatabaseHelper
 
 class ProvinceScreen extends StatelessWidget {
@@ -292,36 +280,17 @@ class ProvinceScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         GestureDetector(
-                          onTap: (){
-                            if (province.id == 3) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BalkhHistoricalPlacesScreen(),
-                                ),
-                              );
-                            } else if (province.id == 4) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BamiyanHistoricalPlacesScreen(),
-                                ),
-                              );
-                            } else if (province.id == 2) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HeratHistoricalPlacesScreen(),
-                                ),
-                              );
-                            } else if (province.id == 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => KabulHistoricalPlacesScreen(),
-                                ),
-                              );
-                            }
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => HistoricalPlacesScreen(
+                                      provinceId: province.id,
+                                      provinceName: province.name,
+                                    ),
+                              ),
+                            );
                           },
                           child: categoryIcon(
                             'assets/images/icons/historical_place.webp',
@@ -330,35 +299,16 @@ class ProvinceScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (province.id == 3) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BalkhParksScreen(),
-                                ),
-                              );
-                            } else if (province.id == 4) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BamiyanParksScreen(),
-                                ),
-                              );
-                            } else if (province.id == 2) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HeratParksScreen(),
-                                ),
-                              );
-                            } else if (province.id == 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => KabulParksScreen(),
-                                ),
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => ParksScreen(
+                                      provinceId: province.id,
+                                      provinceName: province.name,
+                                    ),
+                              ),
+                            );
                           },
                           child: categoryIcon(
                             'assets/images/icons/park.webp',
@@ -367,35 +317,16 @@ class ProvinceScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (province.id == 3) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BalkhHotelsScreen(),
-                                ),
-                              );
-                            } else if (province.id == 4) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BamiyanHotelsScreen(),
-                                ),
-                              );
-                            } else if (province.id == 2) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HeratHotelsScreen(),
-                                ),
-                              );
-                            } else if (province.id == 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => KabulHotelsScreen(),
-                                ),
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => HotelsScreen(
+                                      provinceId: province.id,
+                                      provinceName: province.name,
+                                    ),
+                              ),
+                            );
                           },
                           child: categoryIcon(
                             'assets/images/icons/hotel.webp',
@@ -404,39 +335,16 @@ class ProvinceScreen extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            if (province.id == 3) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => BalkhRestaurantsScreen(),
-                                ),
-                              );
-                            } else if (province.id == 4) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => BamiyanRestaurantsScreen(),
-                                ),
-                              );
-                            } else if (province.id == 2) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => HeratRestaurantsScreen(),
-                                ),
-                              );
-                            } else if (province.id == 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => KabulRestaurantsScreen(),
-                                ),
-                              );
-                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => RestaurantsScreen(
+                                      provinceId: province.id,
+                                      provinceName: province.name,
+                                    ),
+                              ),
+                            );
                           },
                           child: categoryIcon(
                             'assets/images/icons/restaurant.webp',
