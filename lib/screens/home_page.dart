@@ -6,40 +6,31 @@ import '../database/db_helper.dart';
 import '../widgets/city_card.dart';
 import '../widgets/custom_drawer.dart';
 
-/// 1. HomePage is a stateless widget that shows a top menu row + list of city cards.
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
-  /// 2. Key to control the Scaffold, so we can open the drawer programmatically.
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  /// 3. Static list of cities with id.
-  final List<Map<String, dynamic>> cities = [
-    {
-      'id': 1,
-      'name': 'Kabul',
-      'location': 'East of AFG',
-      'image': 'assets/images/Kabul.webp',
-    },
-    {
-      'id': 2,
-      'name': 'Herat',
-      'location': 'West of AFG',
-      'image': 'assets/images/Herat.webp',
-    },
-    {
-      'id': 3,
-      'name': 'Balkh',
-      'location': 'North of AFG',
-      'image': 'assets/images/Balkh.webp',
-    },
-    {
-      'id': 4,
-      'name': 'Bamiyan',
-      'location': 'Centre of AFG',
-      'image': 'assets/images/Bamiyan.webp',
-    },
-  ];
+  late Future<List<Province>> _provincesFuture;
+
+  /// Static location descriptions based on province ID
+  final Map<int, String> staticLocations = {
+    1: 'East of AFG',
+    2: 'West of AFG',
+    3: 'North of AFG',
+    4: 'Centre of AFG',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _provincesFuture = DatabaseHelper().fetchProvinces();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +42,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              // Top Menu Row
+              /// Top Bar
               Row(
                 children: [
                   IconButton(
@@ -69,22 +60,39 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // City Cards List
+              /// Dynamic List of City Cards
               Expanded(
-                child: ListView.builder(
-                  itemCount: cities.length,
-                  itemBuilder: (context, index) {
-                    final city = cities[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: GestureDetector(
-                        onTap: () => _openProvince(context, city['id']),
-                        child: CityCard(
-                          name: city['name']!,
-                          location: city['location']!,
-                          image: city['image']!,
-                        ),
-                      ),
+                child: FutureBuilder<List<Province>>(
+                  future: _provincesFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Center(child: Text('Error loading provinces'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No provinces found'));
+                    }
+
+                    final provinces = snapshot.data!;
+
+                    return ListView.builder(
+                      itemCount: provinces.length,
+                      itemBuilder: (context, index) {
+                        final province = provinces[index];
+                        final staticLocation = staticLocations[province.id] ?? 'Unknown region';
+
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: GestureDetector(
+                            onTap: () => _openProvince(context, province.id),
+                            child: CityCard(
+                              name: province.name,
+                              image: province.image,
+                              location: staticLocation,
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -96,10 +104,11 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  /// Function to fetch province by ID and open its details page
+  /// Opens province details using its ID from SQLite
   Future<void> _openProvince(BuildContext context, int provinceId) async {
     final dbHelper = DatabaseHelper();
     Province? province = await dbHelper.fetchProvinceById(provinceId);
+
     if (province != null) {
       Navigator.push(
         context,
